@@ -1,0 +1,11 @@
+
+ <div class="form-div">
+  
+    <input type="text" [(ngModel)]="dogName" placeholder="Enter dog's name"/><br>
+    <input type="text"[(ngModel)]="dogWeight" placeholder="Enter dog's weight"/>
+    <input type="date"[(ngModel)]="birthDate" placeholder="Enter dog's weight"/> 
+
+    <span *ngIf="dogWeight < 10"  [ngClass]="{'warning' : dogWeight < 5, 'message': false }" >{{dogName}} is underweight</span>
+     <button (click)="addDog()" type="button">Add Dog</button>
+
+</div> 

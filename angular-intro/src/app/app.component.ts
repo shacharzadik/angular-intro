@@ -1,37 +1,70 @@
 import { Component } from '@angular/core';
-
-
-const DOGS = [
-  {name: 'Rex', weight: 20, birthDate:new Date(1998, 5, 7), toggleFormat: true},
-  {name: 'Woof', weight: 8, birthDate:new Date(2006, 3, 5), toggleFormat: true},
-  {name: 'Chuck', weight: 28, birthDate:new Date(2009, 7, 25), toggleFormat: true},
-  {name: 'Barkley', weight: 4, birthDate:new Date(2015, 6, 18), toggleFormat: true},
-  {name: 'Prince', weight: 65, birthDate:new Date(2014, 1, 12), toggleFormat: true}
-];
-
+import { DogService } from './dog.service';
+import { CatService } from './cat.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Dog } from './dog';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+
+
+export class AppComponent implements OnInit  {
+
+
   title = 'my first angular 2.0 ';
-  dogName :string ='rex';
-  dogWeight: number;
-  birthDate: Date;
-  dogs = DOGS;
-  addDog(){
-    this.dogs.push({name: this.dogName, 
-                   weight: this.dogWeight, 
-                   birthDate: this.birthDate},
-                   toggleFormat: true
-                  ) 
-  };
- 
-  banana(dog)   { 
-    return dog.toggleFormat? 'MM/dd/yy' : 'fullDate'; 
+  
+  dogs : Dog[]=[];
+  // dogName: string = '';
+  // dogWeight: number;
+  // birthDate: Date;
+
+  cats = this.catService.getCats();
+
+  constructor(
+    private dogService: DogService,
+    private catService:CatService
+  ) {
+
+    }
+
+
+ngOnInit() { 
+  this.dogs = this.dogService.getDogs();
+  console.log(this.dogs);
+  // this.sayHello = window.setInterval(() => console.log('Hello!'),  1000);	
+}
+
+// ngOnDestroy(){
+//   window.clearInterval(this.sayHello);	
+// }
+
+
+
+  // addDog() {
+  
+  //   let dog = new Dog()
+  //   dog.name = this.dogName;
+  //   dog.weight = this.dogWeight;
+  //   dog.birthDate = this.birthDate;
+  //   this.dogService.addDog(dog)
+  // };
+
+  deleteDog(index) {
+    this.dogs.splice(index, 1);
+    console.log(this.dogs);
   }
-  toggle(dog) { dog.toggleFormat= !dog.toggleFormat; }
+
+  banana(dog) {
+    return dog.toggleFormat ? 'MM/dd/yy' : 'fullDate';
+  }
+  toggle(dog) { dog.toggleFormat = !dog.toggleFormat; }
 
 }
+
+
+
+
+
